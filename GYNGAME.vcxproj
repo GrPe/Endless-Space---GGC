@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Emeny.hpp" />
+    <ClInclude Include="Events.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="ResourceManager.hpp" />
     <ClInclude Include="SpaceShip.hpp" />

@@ -2,15 +2,14 @@
 #include <map>
 #include "SFML\Graphics.hpp"
 
-enum class Types { Enemy1, Enemy2, Enemy3, Enemy4, Player, Bullet, Building};
 
 class ResourceManager
 {
 private:
-	std::map<Types, sf::Texture> resourcesMap;
+	std::map<std::string, sf::Texture> texturesMap;
 
 public:
 	explicit ResourceManager() {};
-	sf::Texture getRes(Types type);
+	sf::Texture& getRes(std::string type);
 	~ResourceManager();
 };

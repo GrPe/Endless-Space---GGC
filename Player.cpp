@@ -10,6 +10,16 @@ bool Player::damageOrHeal(int x)
 	else return true;
 }
 
+void Player::moveLeft(sf::Time time)
+{
+	sprite.move(-(time.asSeconds()*speed),0);
+}
+
+void Player::moveRight(sf::Time time)
+{
+	sprite.move(time.asSeconds()*speed, 0);
+}
+
 void Player::deadEnd(int _hp, float _speed)
 {
 	hp = _hp;

@@ -2,7 +2,7 @@
 #include "SFML\Graphics.hpp"
 #include "SpaceShip.hpp"
 
-class Player : SpaceShip
+class Player : public SpaceShip
 {
 public:
 	Player(int _hp, float _speed, sf::Texture& texture);
@@ -11,6 +11,11 @@ public:
 	// positive value -> heal
 	// negative value -> damage
 	bool damageOrHeal(int x);
+
+	//Movement
+	void moveLeft(sf::Time time);
+	void moveRight(sf::Time time);
+
 
 	//Reset stats of player
 	void deadEnd(int _hp, float _speed);

@@ -36,3 +36,4 @@
 *.VC.VC.opendb
 .vs/
 /Debug
+/src

@@ -2,7 +2,7 @@
 #include "SFML\Graphics.hpp"
 #include "SpaceShip.hpp"
 
-class Enemy : SpaceShip
+class Enemy : public SpaceShip
 {
 public:
 	Enemy(int _hp, float _speed, sf::Texture & texture);
