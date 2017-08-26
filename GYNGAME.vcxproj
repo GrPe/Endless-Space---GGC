@@ -119,8 +119,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Emeny.cpp" />
+    <ClCompile Include="Events.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Render.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SpaceShip.cpp" />
   </ItemGroup>
@@ -128,6 +130,7 @@
     <ClInclude Include="Emeny.hpp" />
     <ClInclude Include="Events.hpp" />
     <ClInclude Include="Player.hpp" />
+    <ClInclude Include="Render.hpp" />
     <ClInclude Include="ResourceManager.hpp" />
     <ClInclude Include="SpaceShip.hpp" />
   </ItemGroup>
