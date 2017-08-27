@@ -9,6 +9,7 @@ protected:
 	sf::Sprite sprite;
 
 public:
+	SpaceShip() {};
 	SpaceShip(int _hp, float _speed, sf::Texture& texture);
 
 

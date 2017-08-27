@@ -1,18 +1,18 @@
 #include "ResourceManager.hpp"
 #include "cstring"
 
-sf::Texture& ResourceManager::getRes(std::string type)
+ResourceManager::ResourceManager()
 {
-	auto temp = texturesMap.find(type);
-	if (temp != texturesMap.end()) return texturesMap[type];
-	sf::Texture texture;
-	std::string tempstring = "src/" + type + ".png";
-	texture.loadFromFile((tempstring));
-	texturesMap.insert(std::pair<std::string, sf::Texture>(type, texture));
-	return texturesMap[type];
+	texturesTab = new sf::Texture[1];
+	texturesTab[0].loadFromFile("src/player.png");
+}
+
+sf::Texture& ResourceManager::getRes(int x)
+{
+	return texturesTab[0];
 }
 
 ResourceManager::~ResourceManager()
 {
-	texturesMap.clear();
+	delete[] texturesTab;
 }

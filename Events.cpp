@@ -1,12 +1,14 @@
 #include "Events.hpp"
 #include "SFML\Graphics.hpp"
+#include <iostream>
 
-bool Events::pMoveLeft = false;
-bool Events::pMoveRight = false;
-bool Events::pShot = false;
 
-void Events::CatchEvent(sf::RenderWindow& window)
+void Events::CatchEvent(sf::RenderWindow& window, Player& player)
 {
+	pMoveLeft = false;
+	pMoveRight = false;
+	pShot = false;
+
 	sf::Event e;
 	while (window.pollEvent(e))
 	{
@@ -20,19 +22,16 @@ void Events::CatchEvent(sf::RenderWindow& window)
 			switch (e.key.code)
 			{
 			case sf::Keyboard::A:
-				pMoveLeft = true;
+				player.moveLeft();
 				break;
 			case sf::Keyboard::D:
-				pMoveRight = true;
+				player.moveRight();
 				break;
 			case sf::Keyboard::Space:
-				pShot = true;
 				break;
 			}
 		}
 		break;
 		}
 	}
-
-
 }

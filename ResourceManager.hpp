@@ -1,15 +1,16 @@
 #pragma once
-#include <map>
+#include <cstring>
+#include <vector>
 #include "SFML\Graphics.hpp"
 
 
 class ResourceManager
 {
 private:
-	std::map<std::string, sf::Texture> texturesMap;
+	sf::Texture* texturesTab;
 
 public:
-	explicit ResourceManager() {};
-	sf::Texture& getRes(std::string type);
+	explicit ResourceManager();
+	sf::Texture& getRes(int x);
 	~ResourceManager();
 };
