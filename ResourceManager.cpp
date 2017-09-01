@@ -6,6 +6,9 @@ ResourceManager::ResourceManager(int i) : MAXAMOUNTOFTEXTURES(i)
 	texturesTab = new sf::Texture[MAXAMOUNTOFTEXTURES];
 	texturesTab[0].loadFromFile("src/player.png");
 	texturesTab[1].loadFromFile("src/bullet.png");
+	texturesTab[2].loadFromFile("src/enemy1.png");
+	texturesTab[3].loadFromFile("src/enemy2.png");
+	texturesTab[4].loadFromFile("src/enemy3.png");
 }
 
 sf::Texture& ResourceManager::getRes(unsigned int x)

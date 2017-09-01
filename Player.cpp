@@ -23,7 +23,7 @@ void Player::moveRight()
 
 void Player::shot(std::vector<Bullet>& listofBullets, sf::Texture& tx)
 {
-	Bullet tempbullet(sprite.getPosition().x, sprite.getPosition().y - sprite.getTexture()->getSize().y * 0.20f,tx);
+	Bullet tempbullet(sprite.getPosition().x, sprite.getPosition().y - sprite.getTexture()->getSize().y * 0.20f,tx,-1);
 	listofBullets.push_back(tempbullet);
 }
 

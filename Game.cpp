@@ -3,7 +3,7 @@
 int main()
 {
 	Render game(800,600);
-	game.Start();
+	game.Start(4,5);
 
 	return 0;
 }

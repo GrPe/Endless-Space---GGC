@@ -6,6 +6,7 @@
 #include "ResourceManager.hpp"
 #include "Bullet.hpp"
 #include <vector>
+#include <random> //c++11 only
 
 class Render
 {
@@ -25,9 +26,13 @@ private:
 	unsigned int amountOfEnemies;
 	unsigned int enemiesInRow;
 	unsigned int enemiesInColumn;
+	//to randomize textures of enemies (is overkill I know)
+	std::default_random_engine generator;
+	std::uniform_int_distribution<int> distribution;
 
 	//bullets
 	std::vector<Bullet> bulletsVector;
+	std::vector<Bullet> bulletsEnemyVector;
 
 	void draw();
 	void moveObjects();
@@ -37,7 +42,7 @@ private:
 
 public:
 	Render(int x, int y);
-	void Start();
+	void Start(unsigned int eir, unsigned int eic);
 	//~Render();
 
 	std::vector<Bullet>& getVectorOfBullets() { return bulletsVector; };
