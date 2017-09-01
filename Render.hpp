@@ -26,7 +26,7 @@ private:
 	unsigned int amountOfEnemies;
 	unsigned int enemiesInRow;
 	unsigned int enemiesInColumn;
-	//to randomize textures of enemies (is overkill I know)
+	//to randomize textures of enemies (it is overkill I know)
 	std::default_random_engine generator;
 	std::uniform_int_distribution<int> distribution;
 

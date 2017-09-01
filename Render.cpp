@@ -14,7 +14,10 @@ void Render::draw()
 
 void Render::moveObjects()
 {
+	//bullets
 	for (auto& x : bulletsVector) x.move();
+	//aliens
+	
 }
 
 void Render::check()
@@ -53,14 +56,14 @@ void Render::Start(unsigned int eir, unsigned int eic)
 	unsigned int c = 1;
 	for (auto& x : alienArmyVector)
 	{
-		x.getSprite().setPosition((xSize*0.9f / enemiesInColumn)*c, (ySize*0.7f / enemiesInRow) * r);
+		x.getSprite().setPosition((xSize*0.65f / enemiesInColumn)*c, (ySize*0.6 / enemiesInRow) * r);
 		c++;
-		if (c >= enemiesInColumn)
+		if (c > enemiesInColumn)
 		{
 			r++;
 			c = 1;
 		}
-		if (r >= enemiesInRow) break; //is impossible, but...
+		if (r > enemiesInRow) break; //is impossible, but...
 	}
 	
 	//main loop of game
