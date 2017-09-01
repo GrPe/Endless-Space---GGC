@@ -4,7 +4,6 @@
 
 class Events
 {
-	//only static functions
 private:
 	bool pMoveLeft;
 	bool pMoveRight;
@@ -12,5 +11,5 @@ private:
 
 public:
 	explicit Events() {};
-	void CatchEvent(sf::RenderWindow& window, Player& player);
+	void CatchEvent(sf::RenderWindow& window, Player& player, std::vector <Bullet>& vb, sf::Texture& tx);
 };

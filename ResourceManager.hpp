@@ -8,9 +8,11 @@ class ResourceManager
 {
 private:
 	sf::Texture* texturesTab;
+	const unsigned int MAXAMOUNTOFTEXTURES;
 
 public:
-	explicit ResourceManager();
-	sf::Texture& getRes(int x);
+	explicit ResourceManager() : MAXAMOUNTOFTEXTURES(0) {};
+	explicit ResourceManager(int i);
+	sf::Texture& getRes(unsigned int x);
 	~ResourceManager();
 };

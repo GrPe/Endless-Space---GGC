@@ -1,6 +1,7 @@
 #pragma once
 #include "SFML\Graphics.hpp"
 #include "SpaceShip.hpp"
+#include "Bullet.hpp"
 
 class Player : public SpaceShip
 {
@@ -16,6 +17,9 @@ public:
 	//Movement
 	void moveLeft();
 	void moveRight();
+
+	//Shot
+	void shot(std::vector<Bullet>& listofBullets, sf::Texture& tx);
 
 
 	//Reset stats of player

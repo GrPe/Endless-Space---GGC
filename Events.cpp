@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-void Events::CatchEvent(sf::RenderWindow& window, Player& player)
+void Events::CatchEvent(sf::RenderWindow& window, Player& player, std::vector <Bullet>& vb, sf::Texture& tx)
 {
 	pMoveLeft = false;
 	pMoveRight = false;
@@ -28,6 +28,7 @@ void Events::CatchEvent(sf::RenderWindow& window, Player& player)
 				player.moveRight();
 				break;
 			case sf::Keyboard::Space:
+				player.shot(vb,tx);
 				break;
 			}
 		}

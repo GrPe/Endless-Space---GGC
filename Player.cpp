@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include "Render.hpp"
 
 Player::Player(int _hp, float _speed, sf::Texture& texture) : SpaceShip(_hp, _speed, texture)
 {}
@@ -18,6 +19,12 @@ void Player::moveLeft()
 void Player::moveRight()
 {
 	sprite.move(1.0f/120.0f*speed, 0);
+}
+
+void Player::shot(std::vector<Bullet>& listofBullets, sf::Texture& tx)
+{
+	Bullet tempbullet(sprite.getPosition().x, sprite.getPosition().y - sprite.getTexture()->getSize().y * 0.20f,tx);
+	listofBullets.push_back(tempbullet);
 }
 
 void Player::deadEnd(int _hp, float _speed)
