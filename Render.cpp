@@ -85,11 +85,14 @@ void Render::check()
 	//Enemy shooting
 	enemyShoot();
 
+
+	//Collision (player)
+
 }
 
 void Render::enemyShoot()
 {
-	if (getIntFromRange(1, 100) % 50 == 0)
+	if (getIntFromRange(1, 100) % 50 == 0) // Amount of enemy's bullets
 	{
 		int temp = getIntFromRange(0, alienArmyVector.size() - 1);
 		alienArmyVector[temp].shot(bulletsEnemyVector, rs.getRes(1));
@@ -103,7 +106,7 @@ int Render::getIntFromRange(int from, int to)
 }
 
 Render::Render(int x, int y) : xSize(x), ySize(y), window(sf::VideoMode(xSize, ySize),
-	"Endless Space",sf::Style::Fullscreen), rs(10) 
+	"Endless Space"), rs(10) 
 {
 	player.deadEnd(100, 900.f, rs.getRes(0));
 	window.setFramerateLimit(120);

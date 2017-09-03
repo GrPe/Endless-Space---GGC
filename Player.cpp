@@ -13,11 +13,15 @@ bool Player::damageOrHeal(int x)
 
 void Player::moveLeft()
 {
-	sprite.move(-(1.0f/120.0f*speed),0);
+	//Movement Limit 
+	if(sprite.getPosition().x > 60.0f)
+	sprite.move(-(1.0f/120.0f*speed),0.0f);
 }
 
 void Player::moveRight()
 {
+	//Movement Limit
+	if(sprite.getPosition().x < 1860.0f)
 	sprite.move(1.0f/120.0f*speed, 0);
 }
 
