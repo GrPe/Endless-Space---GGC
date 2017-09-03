@@ -3,6 +3,8 @@
 void Render::draw()
 {
 	window.clear();
+	//Enemy's Bullets
+	for (auto& x : bulletsEnemyVector) window.draw(x.getSprite());
 	//Enemies
 	for (auto& x : alienArmyVector) window.draw(x.getSprite());
 	//Bullets
@@ -50,7 +52,12 @@ void Render::check()
 	temp.clear();
 
 	//Enemy bullets
-
+	for (auto x = bulletsEnemyVector.begin(); x != bulletsEnemyVector.end(); x++)
+	{
+		if (x->getSprite().getPosition().y > ySize) temp.push_back(x);
+	}
+	for (auto x : temp) bulletsEnemyVector.erase(x);
+	temp.clear();
 
 	//Enemy Movement -- Collision
 
@@ -74,10 +81,29 @@ void Render::check()
 		isMovingDown = false;
 		isMovingRight = true;
 	}
+
+	//Enemy shooting
+	enemyShoot();
+
+}
+
+void Render::enemyShoot()
+{
+	if (getIntFromRange(1, 100) % 50 == 0)
+	{
+		int temp = getIntFromRange(0, alienArmyVector.size() - 1);
+		alienArmyVector[temp].shot(bulletsEnemyVector, rs.getRes(1));
+	}
+}
+
+int Render::getIntFromRange(int from, int to)
+{
+	std::uniform_int_distribution<int> distribution(from,to);
+	return distribution(generator);
 }
 
 Render::Render(int x, int y) : xSize(x), ySize(y), window(sf::VideoMode(xSize, ySize),
-	"Endless Space"), rs(10), distribution(2,4)
+	"Endless Space",sf::Style::Fullscreen), rs(10) 
 {
 	player.deadEnd(100, 900.f, rs.getRes(0));
 	window.setFramerateLimit(120);
@@ -90,7 +116,7 @@ void Render::Start(unsigned int eir, unsigned int eic)
 	enemiesInRow = eir;
 	enemiesInColumn = eic;
 	amountOfEnemies = enemiesInRow * enemiesInColumn;
-	for (unsigned int i = 0; i < amountOfEnemies; i++) alienArmyVector.push_back(Enemy(1, 180.0f, rs.getRes(distribution(generator))));
+	for (unsigned int i = 0; i < amountOfEnemies; i++) alienArmyVector.push_back(Enemy(1, 180.0f, rs.getRes(getIntFromRange(2,4))));
 	//there are temp variable to set enemies position
 	unsigned int r = 1;
 	unsigned int c = 1;

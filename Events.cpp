@@ -21,6 +21,9 @@ void Events::CatchEvent(sf::RenderWindow& window, Player& player, std::vector <B
 		{
 			switch (e.key.code)
 			{
+			case sf::Keyboard::Escape:
+				window.close();
+				break;
 			case sf::Keyboard::A:
 				player.moveLeft();
 				break;

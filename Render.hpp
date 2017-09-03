@@ -34,7 +34,9 @@ private:
 	Enemy ender;
 	//to randomize textures of enemies (it is overkill I know)
 	std::default_random_engine generator;
-	std::uniform_int_distribution<int> distribution;
+	//std::uniform_int_distribution<int> distribution;
+	//to select enemy who can shoot
+
 
 	//bullets
 	std::vector<Bullet> bulletsVector;
@@ -45,6 +47,8 @@ private:
 	void check();
 	bool win();
 	bool failure();
+	void enemyShoot(); 
+	inline int getIntFromRange(int from, int to);
 
 public:
 	Render(int x, int y);
