@@ -42,25 +42,9 @@ void Render::moveObjects()
 
 void Render::check()
 {
-	//Player bullets
-	std::vector<std::vector<Bullet>::iterator> temp;
-	for (auto x = bulletsVector.begin(); x != bulletsVector.end(); x++)
-	{
-		if (x->getSprite().getPosition().y < 0) temp.push_back(x);
-	}
-	for (auto x : temp) bulletsVector.erase(x);
-	temp.clear();
-
-	//Enemy bullets
-	for (auto x = bulletsEnemyVector.begin(); x != bulletsEnemyVector.end(); x++)
-	{
-		if (x->getSprite().getPosition().y > ySize) temp.push_back(x);
-	}
-	for (auto x : temp) bulletsEnemyVector.erase(x);
-	temp.clear();
-
+	std::vector<std::vector<Bullet>::iterator> tempBulletVector; //stores id of unused bullets;
+	
 	//Enemy Movement -- Collision
-
 	if (ender.getSprite().getPosition().x > xSize*0.97f && isMovingRight)
 	{
 		isMovingRight = false;
@@ -85,8 +69,60 @@ void Render::check()
 	//Enemy shooting
 	enemyShoot();
 
+	//Hits detection (enemies)
+	std::vector<std::vector<Enemy>::iterator> deadEnemies;
+	for (auto enemy = alienArmyVector.begin(); enemy != alienArmyVector.end(); enemy++)
+	{
+		int rangeMinX = enemy->getSprite().getPosition().x - enemy->getSprite().getTexture()->getSize().x*0.175f;
+		int rangeMaxX = enemy->getSprite().getPosition().x + enemy->getSprite().getTexture()->getSize().x*0.175f;
+		int rangeY = enemy->getSprite().getPosition().y + enemy->getSprite().getTexture()->getSize().y*0.175f;
+		for (auto bullet = bulletsVector.begin(); bullet != bulletsVector.end(); bullet++)
+		{
+			int bulletXPosition = bullet->getSprite().getPosition().x;
+			int bulletYPosition = bullet->getSprite().getPosition().y;
+			if (bulletXPosition > rangeMinX && bulletXPosition < rangeMaxX && bulletYPosition < rangeY)
+			{
+				deadEnemies.push_back(enemy);
+  				tempBulletVector.push_back(bullet);
+			}
+		}
+	}
 
-	//Collision (player)
+	//Player bullets
+	for (auto x = bulletsVector.begin(); x != bulletsVector.end(); x++)
+	{
+		if (x->getSprite().getPosition().y < 0) tempBulletVector.push_back(x);
+	}
+	for (auto x : tempBulletVector) bulletsVector.erase(x);
+	tempBulletVector.clear();
+
+	//Enemy bullets
+	for (auto x = bulletsEnemyVector.begin(); x != bulletsEnemyVector.end(); x++)
+	{
+		if (x->getSprite().getPosition().y > ySize) tempBulletVector.push_back(x);
+	}
+	for (auto x : tempBulletVector) bulletsEnemyVector.erase(x);
+	tempBulletVector.clear();
+
+	//Hits detection (player)
+	{
+		int playerXMinPosition = player.getSprite().getPosition().x - player.getSprite().getTexture()->getSize().x*0.2f;
+		int playerXMaxPosition = player.getSprite().getPosition().x + player.getSprite().getTexture()->getSize().x*0.2f;
+		for (auto bullet = bulletsEnemyVector.begin(); bullet != bulletsEnemyVector.end(); bullet++)
+		{
+			int bulletXPosition = bullet->getSprite().getPosition().x;
+			int bulletYPosition = bullet->getSprite().getPosition().y;
+			if (bulletYPosition >= player.getSprite().getPosition().y)
+			{
+				if (bulletXPosition > playerXMinPosition && bulletXPosition < playerXMaxPosition); //failure();
+			}
+		}
+	}
+
+	//Destroy enemies
+	//Not Finish YET!
+	for (auto& x : deadEnemies) alienArmyVector.erase(x);
+	deadEnemies.clear();
 
 }
 

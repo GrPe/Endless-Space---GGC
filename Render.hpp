@@ -45,8 +45,8 @@ private:
 	void draw();
 	void moveObjects();
 	void check();
-	bool win();
-	bool failure();
+	bool win(); //To implement
+	bool failure(); //To implement
 	void enemyShoot(); 
 	inline int getIntFromRange(int from, int to);
 
