@@ -76,12 +76,13 @@ void Render::check()
 	{
 		float rangeMinX = enemy->getSprite().getPosition().x - enemy->getSprite().getTexture()->getSize().x*0.175f;
 		float rangeMaxX = enemy->getSprite().getPosition().x + enemy->getSprite().getTexture()->getSize().x*0.175f;
-		float rangeY = enemy->getSprite().getPosition().y + enemy->getSprite().getTexture()->getSize().y*0.175f;
+		float rangeYMin = enemy->getSprite().getPosition().y; //- enemy->getSprite().getTexture()->getSize().y*0.175f;
+		float rangeYMax = enemy->getSprite().getPosition().y + enemy->getSprite().getTexture()->getSize().y*0.175f;
 		for (auto bullet = bulletsVector.begin(); bullet != bulletsVector.end(); bullet++)
 		{
 			float bulletXPosition = bullet->getSprite().getPosition().x;
 			float bulletYPosition = bullet->getSprite().getPosition().y;
-			if (bulletXPosition > rangeMinX && bulletXPosition < rangeMaxX && bulletYPosition < rangeY)
+			if (bulletXPosition >= rangeMinX && bulletXPosition <= rangeMaxX && bulletYPosition >= rangeYMin && bulletYPosition <= rangeYMax)
 			{
 				deadEnemies.push_back(enemy);
   				tempBulletVector.push_back(bullet);
