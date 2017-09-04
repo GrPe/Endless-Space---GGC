@@ -7,7 +7,7 @@ Enemy::Enemy(int _hp, float _speed, sf::Texture & texture) : SpaceShip(_hp, _spe
 }
 
 
-void Enemy::shot(std::vector<Bullet>& listOfEnemyBullets, sf::Texture & tx)
+void Enemy::shot(std::list<Bullet>& listOfEnemyBullets, sf::Texture & tx)
 {
 	Bullet tempbullet(sprite.getPosition().x, sprite.getPosition().y - sprite.getTexture()->getSize().y * 0.20f, tx, 1, 800.0f);
 	listOfEnemyBullets.push_back(tempbullet);

@@ -6,6 +6,7 @@
 #include "ResourceManager.hpp"
 #include "Bullet.hpp"
 #include <vector>
+#include <list>
 #include <random> //c++11 only
 
 class Render
@@ -40,7 +41,7 @@ private:
 
 	//bullets
 	std::vector<Bullet> bulletsVector;
-	std::vector<Bullet> bulletsEnemyVector;
+	std::list<Bullet> bulletsEnemyVector;
 
 	void draw();
 	void moveObjects();

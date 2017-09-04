@@ -43,6 +43,7 @@ void Render::moveObjects()
 void Render::check()
 {
 	std::vector<std::vector<Bullet>::iterator> tempBulletVector; //stores id of unused bullets;
+	std::vector<std::list<Bullet>::iterator> tempBulletList; //stores id of unused enemy's bullets
 	
 	//Enemy Movement -- Collision
 	if (ender.getSprite().getPosition().x > xSize*0.97f && isMovingRight)
@@ -73,13 +74,13 @@ void Render::check()
 	std::vector<std::vector<Enemy>::iterator> deadEnemies;
 	for (auto enemy = alienArmyVector.begin(); enemy != alienArmyVector.end(); enemy++)
 	{
-		int rangeMinX = enemy->getSprite().getPosition().x - enemy->getSprite().getTexture()->getSize().x*0.175f;
-		int rangeMaxX = enemy->getSprite().getPosition().x + enemy->getSprite().getTexture()->getSize().x*0.175f;
-		int rangeY = enemy->getSprite().getPosition().y + enemy->getSprite().getTexture()->getSize().y*0.175f;
+		float rangeMinX = enemy->getSprite().getPosition().x - enemy->getSprite().getTexture()->getSize().x*0.175f;
+		float rangeMaxX = enemy->getSprite().getPosition().x + enemy->getSprite().getTexture()->getSize().x*0.175f;
+		float rangeY = enemy->getSprite().getPosition().y + enemy->getSprite().getTexture()->getSize().y*0.175f;
 		for (auto bullet = bulletsVector.begin(); bullet != bulletsVector.end(); bullet++)
 		{
-			int bulletXPosition = bullet->getSprite().getPosition().x;
-			int bulletYPosition = bullet->getSprite().getPosition().y;
+			float bulletXPosition = bullet->getSprite().getPosition().x;
+			float bulletYPosition = bullet->getSprite().getPosition().y;
 			if (bulletXPosition > rangeMinX && bulletXPosition < rangeMaxX && bulletYPosition < rangeY)
 			{
 				deadEnemies.push_back(enemy);
@@ -99,19 +100,19 @@ void Render::check()
 	//Enemy bullets
 	for (auto x = bulletsEnemyVector.begin(); x != bulletsEnemyVector.end(); x++)
 	{
-		if (x->getSprite().getPosition().y > ySize) tempBulletVector.push_back(x);
+		if (x->getSprite().getPosition().y > ySize) tempBulletList.push_back(x);
 	}
-	for (auto x : tempBulletVector) bulletsEnemyVector.erase(x);
-	tempBulletVector.clear();
+	for (auto x : tempBulletList) bulletsEnemyVector.erase(x);
+	tempBulletList.clear();
 
 	//Hits detection (player)
 	{
-		int playerXMinPosition = player.getSprite().getPosition().x - player.getSprite().getTexture()->getSize().x*0.2f;
-		int playerXMaxPosition = player.getSprite().getPosition().x + player.getSprite().getTexture()->getSize().x*0.2f;
+		float playerXMinPosition = player.getSprite().getPosition().x - player.getSprite().getTexture()->getSize().x*0.2f;
+		float playerXMaxPosition = player.getSprite().getPosition().x + player.getSprite().getTexture()->getSize().x*0.2f;
 		for (auto bullet = bulletsEnemyVector.begin(); bullet != bulletsEnemyVector.end(); bullet++)
 		{
-			int bulletXPosition = bullet->getSprite().getPosition().x;
-			int bulletYPosition = bullet->getSprite().getPosition().y;
+			float bulletXPosition = bullet->getSprite().getPosition().x;
+			float bulletYPosition = bullet->getSprite().getPosition().y;
 			if (bulletYPosition >= player.getSprite().getPosition().y)
 			{
 				if (bulletXPosition > playerXMinPosition && bulletXPosition < playerXMaxPosition); //failure();
@@ -128,7 +129,7 @@ void Render::check()
 
 void Render::enemyShoot()
 {
-	if (getIntFromRange(1, 100) % 50 == 0) // Amount of enemy's bullets
+	if (getIntFromRange(1, 100) % 5 == 0) // Amount of enemy's bullets
 	{
 		int temp = getIntFromRange(0, alienArmyVector.size() - 1);
 		alienArmyVector[temp].shot(bulletsEnemyVector, rs.getRes(1));
