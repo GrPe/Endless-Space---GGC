@@ -1,5 +1,5 @@
 #include "Player.hpp"
-#include "Render.hpp"
+#include "Game.hpp"
 
 Player::Player(int _hp, float _speed, sf::Texture& texture) : SpaceShip(_hp, _speed, texture)
 {}

@@ -9,9 +9,10 @@ ResourceManager::ResourceManager(int i) : MAXAMOUNTOFTEXTURES(i)
 	texturesTab[2].loadFromFile("src/enemy1.png");
 	texturesTab[3].loadFromFile("src/enemy2.png");
 	texturesTab[4].loadFromFile("src/enemy3.png");
+	font.loadFromFile("src/font.ttf");
 }
 
-sf::Texture& ResourceManager::getRes(unsigned int x)
+sf::Texture& ResourceManager::getTexture(unsigned int x)
 {
 	if (x > MAXAMOUNTOFTEXTURES) return texturesTab[0];
 	return texturesTab[x];
