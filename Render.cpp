@@ -40,7 +40,7 @@ void Render::moveObjects()
 	}
 }
 
-void Render::check()
+unsigned int Render::check()
 {
 	std::vector<std::vector<Bullet>::iterator> tempBulletVector; //stores id of unused bullets;
 	std::vector<std::list<Bullet>::iterator> tempBulletList; //stores id of unused enemy's bullets
@@ -116,7 +116,7 @@ void Render::check()
 			float bulletYPosition = bullet->getSprite().getPosition().y;
 			if (bulletYPosition >= player.getSprite().getPosition().y)
 			{
-				if (bulletXPosition > playerXMinPosition && bulletXPosition < playerXMaxPosition); //failure();
+				if (bulletXPosition > playerXMinPosition && bulletXPosition < playerXMaxPosition) return 0x2;
 			}
 		}
 	}
@@ -126,11 +126,60 @@ void Render::check()
 	for (auto& x : deadEnemies) alienArmyVector.erase(x);
 	deadEnemies.clear();
 
+	//Victory Conditions
+	if (alienArmyVector.size() <= 0) return 0x1;
+
+	//Continue play
+	return 0x0;
+}
+
+void Render::win()
+{
+	sf::Font font;
+	font.loadFromFile("src/font.ttf");
+	sf::Text text("YOU WIN!",font);
+	sf::Text text2("Press ESC to exit",font);
+	text.setCharacterSize(80);
+	text2.setCharacterSize(30);
+	text.setFillColor(sf::Color::White);
+	text2.setFillColor(sf::Color::White);
+	text.setPosition(xSize*0.5f-140, ySize*0.5f-120);
+	text2.setPosition(xSize*0.5f-120, ySize*0.5f +80);
+	while (window.isOpen())
+	{
+		window.clear();
+		window.draw(text);
+		window.draw(text2);
+		window.display();
+		events.WinEvent(window);
+	}
+}
+
+void Render::failure()
+{
+	sf::Font font;
+	font.loadFromFile("src/font.ttf");
+	sf::Text text("YOU LOST", font);
+	sf::Text text2("Press ESC to exit", font);
+	text.setCharacterSize(80);
+	text2.setCharacterSize(30);
+	text.setFillColor(sf::Color::White);
+	text2.setFillColor(sf::Color::White);
+	text.setPosition(xSize*0.5f - 140, ySize*0.5f - 120);
+	text2.setPosition(xSize*0.5f - 120, ySize*0.5f + 80);
+	while(window.isOpen())
+	{
+		window.clear();
+		window.draw(text);
+		window.draw(text2);
+		window.display();
+		events.WinEvent(window);
+	}
 }
 
 void Render::enemyShoot()
 {
-	if (getIntFromRange(1, 100) % 5 == 0) // Amount of enemy's bullets
+	if (getIntFromRange(1, 100) % 50 == 0) // Amount of enemy's bullets
 	{
 		int temp = getIntFromRange(0, alienArmyVector.size() - 1);
 		alienArmyVector[temp].shot(bulletsEnemyVector, rs.getRes(1));
@@ -144,7 +193,7 @@ int Render::getIntFromRange(int from, int to)
 }
 
 Render::Render(int x, int y) : xSize(x), ySize(y), window(sf::VideoMode(xSize, ySize),
-	"Endless Space"), rs(10) 
+	"Endless Space"), rs(10), finish(false)
 {
 	player.deadEnd(100, 900.f, rs.getRes(0));
 	window.setFramerateLimit(120);
@@ -184,7 +233,20 @@ void Render::Start(unsigned int eir, unsigned int eic)
 	{
 		events.CatchEvent(window,player, bulletsVector,rs.getRes(1));
 		moveObjects();
-		check();
+		switch (check())
+		{
+		case 0x0:
+			break;
+		case 0x1:
+			win();
+			finish = true;
+			break;
+		case 0x2:
+			failure();
+			finish = true;
+			break;
+		}
 		draw();
+		if (finish) break; //End of game
 	}
 }

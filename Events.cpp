@@ -39,3 +39,13 @@ void Events::CatchEvent(sf::RenderWindow& window, Player& player, std::vector <B
 		}
 	}
 }
+
+void Events::WinEvent(sf::RenderWindow & window)
+{
+	sf::Event e;
+	while (window.pollEvent(e))
+	{
+		if (e.type == sf::Event::Closed) window.close(); //END
+		if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Escape) window.close(); //END
+	}
+}

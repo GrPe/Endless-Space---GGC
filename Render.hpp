@@ -12,6 +12,9 @@
 class Render
 {
 private:
+	//Play control
+	bool finish;
+
 	//map
 	const unsigned int xSize;
 	const unsigned int ySize;
@@ -45,16 +48,15 @@ private:
 
 	void draw();
 	void moveObjects();
-	void check();
-	bool win(); //To implement
-	bool failure(); //To implement
+	unsigned int check();
+	void win();
+	void failure();
 	void enemyShoot(); 
 	inline int getIntFromRange(int from, int to);
 
 public:
 	Render(int x, int y);
 	void Start(unsigned int eir, unsigned int eic);
-	//~Render();
 
 	std::vector<Bullet>& getVectorOfBullets() { return bulletsVector; };
 	ResourceManager& getRS() {return rs;};
