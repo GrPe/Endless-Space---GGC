@@ -9,10 +9,9 @@ public:
 	Player() {};
 	Player(int _hp, float _speed, sf::Texture& texture);
 
-	// return true is player is dead
-	// positive value -> heal
-	// negative value -> damage
-	bool damageOrHeal(int x);
+	void getDamage();
+	void getHeal();
+	void getHeal(unsigned int x);
 
 	//Movement
 	void moveLeft();

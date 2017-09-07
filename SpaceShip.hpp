@@ -4,7 +4,8 @@
 class SpaceShip
 {
 protected:
-	int hp;
+	int hpCurrent;
+	int hpMax;
 	float speed;
 	sf::Sprite sprite;
 
@@ -14,7 +15,8 @@ public:
 
 
 	//GET FUNCTION
-	int getHP() const { return hp; }
+	int getHPMax() const { return hpMax; }
+	int getHPCurrent() const { return hpCurrent; }
 	float getSpeed() const { return speed; }
 	sf::Sprite& getSprite() { return sprite; }
 

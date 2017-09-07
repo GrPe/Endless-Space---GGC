@@ -9,6 +9,7 @@ ResourceManager::ResourceManager(int i) : MAXAMOUNTOFTEXTURES(i)
 	texturesTab[2].loadFromFile("src/enemy1.png");
 	texturesTab[3].loadFromFile("src/enemy2.png");
 	texturesTab[4].loadFromFile("src/enemy3.png");
+	texturesTab[5].loadFromFile("src/hp.png");
 	font.loadFromFile("src/font.ttf");
 }
 

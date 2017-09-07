@@ -5,6 +5,7 @@ void Game::drawGame()
 	window.clear();
 	//GUI
 	window.draw(scoreLabel);
+	for (int x = 0; x < player.getHPCurrent(); x++) window.draw(HPSprites[x]);
 	//Enemy's Bullets
 	for (auto& x : bulletsEnemyVector) window.draw(x.getSprite());
 	//Enemies
@@ -116,11 +117,13 @@ void Game::hitsDetectionPlayer()
 		{
 			if (bulletXPosition > playerXMinPosition && bulletXPosition < playerXMaxPosition)
 			{
-				finishGame();
-				drawFailure();
+				player.getDamage();
+				bulletsEnemyToRemove.push_back(bullet);
 			}
 		}
 	}
+	for (auto& x : bulletsEnemyToRemove) bulletsEnemyVector.erase(x);
+	bulletsEnemyToRemove.clear();
 }
 
 inline void Game::finishGame()
@@ -137,6 +140,27 @@ void Game::VictoryCheck()
 		finishGame();
 		drawFailure();
 	}
+}
+
+void Game::FailCheck()
+{
+	if (player.getHPCurrent() <= 0)
+	{
+		finishGame();
+		drawFailure();
+	}
+}
+
+inline void Game::addPoints()
+{
+	scoreCounter++;
+	scoreLabel.setString("Score: " + std::to_string(scoreCounter));
+}
+
+inline void Game::addPoints(unsigned int x)
+{
+	scoreCounter += x;
+	scoreLabel.setString("Score:" + std::to_string(scoreCounter));
 }
 
 void Game::drawWin()
@@ -208,6 +232,7 @@ void Game::hitsDetectionEnemies()
 			{
 				deadEnemies.push_back(enemy);
 				bulletsToRemove.push_back(bullet);
+				addPoints();
 			}
 		}
 	}
@@ -235,11 +260,24 @@ int Game::getIntFromRange(int from, int to)
 }
 
 Game::Game(int x, int y) : xSize(x), ySize(y), window(sf::VideoMode(xSize, ySize),
-	"Endless Space"), rs(10), finish(false)
+	"Endless Space"), rs(10), finish(false), scoreCounter(0), scoreLabel("Score: 0", rs.getFont())
 {
-	player.deadEnd(100, 900.f, rs.getTexture(0));
-	window.setFramerateLimit(120);
+	//Player
+	player.deadEnd(3, 900.f, rs.getTexture(0));
 	player.getSprite().setPosition(sf::Vector2f(xSize*0.5f, ySize*0.9f));
+	//Window
+	window.setFramerateLimit(120);
+	//Labels
+	scoreLabel.setPosition(xSize - 220.0f,10.0f);
+	scoreLabel.setCharacterSize(NORMALTEXTSIZE);
+	//HP
+	for (int i = 0; i < player.getHPMax(); i++) HPSprites.push_back(sf::Sprite(rs.getTexture(5)));
+	int counter = 0;
+	for (auto& x : HPSprites)
+	{
+		x.setOrigin(x.getTexture()->getSize().x*0.5f, x.getTexture()->getSize().y*0.5f);
+		x.setPosition(20.0f+ 30.0f*counter++, 32.0f);
+	}
 }
 
 void Game::Start(unsigned int eir, unsigned int eic)
@@ -263,6 +301,7 @@ void Game::Start(unsigned int eir, unsigned int eic)
 		deleteEnemiesBullets();
 		hitsDetectionPlayer();
 		VictoryCheck();
+		FailCheck();
 		drawGame();
 		if (finish) break; //End of game
 	}

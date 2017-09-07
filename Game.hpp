@@ -7,6 +7,7 @@
 #include "Bullet.hpp"
 #include <vector>
 #include <list>
+#include <string>
 #include <random> //c++11 only
 
 class Game
@@ -14,12 +15,15 @@ class Game
 private:
 	//Play control
 	bool finish;
-	unsigned int pointsCounter;
+	unsigned int scoreCounter;
 
 	//GUI
 	sf::Text scoreLabel;
 	sf::Text failWinLabel;
 	sf::Text infoLabelNormal;
+	const unsigned int NORMALTEXTSIZE = 30;
+	const unsigned int BIGTEXTSIZE = 80;
+	std::vector<sf::Sprite> HPSprites;
 
 	//map
 	const unsigned int xSize;
@@ -74,6 +78,9 @@ private:
 	//Win-Fail checkers
 	inline void finishGame();
 	void VictoryCheck();
+	void FailCheck();
+	inline void addPoints();
+	inline void addPoints(unsigned int x);
 	//Randomize
 	inline int getIntFromRange(int from, int to);
 
