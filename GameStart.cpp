@@ -3,7 +3,7 @@
 int main()
 {
 	Game game(1920,1080);
-	game.Start(4,5);
+	game.Start(6,10);
 
 	return 0;
 }

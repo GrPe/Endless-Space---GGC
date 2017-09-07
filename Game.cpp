@@ -10,6 +10,8 @@ void Game::drawGame()
 	for (auto& x : bulletsEnemyVector) window.draw(x.getSprite());
 	//Enemies
 	for (auto& x : alienArmyVector) window.draw(x.getSprite());
+	//Buildings
+	for (auto& x : buildings) window.draw(x.getSprite());
 	//Bullets
 	for (auto& x : bulletsVector) window.draw(x.getSprite());
 	//Player
@@ -29,7 +31,7 @@ void Game::createEnemies(unsigned int eir, unsigned int eic)
 	unsigned int c = 1;
 	for (auto& x : alienArmyVector)
 	{
-		x.getSprite().setPosition((xSize*0.65f / enemiesInColumn)*c, (ySize*0.6f / enemiesInRow) * r);
+		x.getSprite().setPosition((xSize*0.45f / enemiesInColumn)*c, (ySize*0.5f / enemiesInRow) * r);
 		c++;
 		if (c > enemiesInColumn)
 		{
@@ -196,10 +198,10 @@ void Game::hitsDetectionEnemies()
 {
 	for (auto enemy = alienArmyVector.begin(); enemy != alienArmyVector.end(); enemy++)
 	{
-		float rangeMinX = enemy->getSprite().getPosition().x - enemy->getSprite().getTexture()->getSize().x*0.175f;
-		float rangeMaxX = enemy->getSprite().getPosition().x + enemy->getSprite().getTexture()->getSize().x*0.175f;
-		float rangeYMin = enemy->getSprite().getPosition().y; //- enemy->getSprite().getTexture()->getSize().y*0.175f;
-		float rangeYMax = enemy->getSprite().getPosition().y + enemy->getSprite().getTexture()->getSize().y*0.175f;
+		float rangeMinX = enemy->getSprite().getPosition().x - enemy->getSprite().getTexture()->getSize().x*0.14f;
+		float rangeMaxX = enemy->getSprite().getPosition().x + enemy->getSprite().getTexture()->getSize().x*0.14f;
+		float rangeYMin = enemy->getSprite().getPosition().y;
+		float rangeYMax = enemy->getSprite().getPosition().y + enemy->getSprite().getTexture()->getSize().y*0.14f;
 		for (auto bullet = bulletsVector.begin(); bullet != bulletsVector.end(); bullet++)
 		{
 			float bulletXPosition = bullet->getSprite().getPosition().x;
@@ -221,11 +223,14 @@ void Game::hitsDetectionEnemies()
 
 void Game::crossDownLineCheck()
 {
-	if (ender.getSprite().getPosition().y >= player.getSprite().getPosition().y-50.0f)
+	for (auto& x : alienArmyVector)
 	{
-		finishGame();
-		player.kill();
-		FailCheck();
+		if (x.getSprite().getPosition().y >= player.getSprite().getPosition().y - 50.0f)
+		{
+			finishGame();
+			player.kill();
+			FailCheck();
+		}
 	}
 }
 
@@ -245,8 +250,45 @@ int Game::getIntFromRange(int from, int to)
 	return distribution(generator);
 }
 
+void Game::hitsDetectionBuildings()
+{
+	for (auto& building : buildings)
+	{
+		float maxLeft = building.getSprite().getPosition().x - building.getSprite().getTexture()->getSize().x*0.5f*1.2f;
+		float maxRight = building.getSprite().getPosition().x + building.getSprite().getTexture()->getSize().x * 0.5f*1.2f;
+		float maxUp = building.getSprite().getPosition().y - building.getSprite().getTexture()->getSize().y * 0.5f*1.2f;
+		for (auto bullet = bulletsEnemyVector.begin();bullet != bulletsEnemyVector.end();bullet++)
+		{
+			float xBulletCoor = bullet->getSprite().getPosition().x;
+			float yBulletCoor = bullet->getSprite().getPosition().y;
+			if (xBulletCoor > maxLeft && xBulletCoor < maxRight && yBulletCoor > maxUp)
+			{
+				building.getDamage();
+				bulletsEnemyToRemove.push_back(bullet);
+			}
+		}
+	}
+	for (auto& x : bulletsEnemyToRemove) bulletsEnemyVector.erase(x);
+	bulletsEnemyToRemove.clear();
+	destroyBuildings();
+}
+
+void Game::createBuildings()
+{
+	for (int i = 0; i < 5; i++) buildings.push_back(Building(rs));
+	int counter = 0;
+	for (auto& x : buildings) x.getSprite().setPosition(300.0f + counter++ * 350.0f, player.getSprite().getPosition().x - 120.0f);
+}
+
+void Game::destroyBuildings()
+{
+	for (auto x = buildings.begin(); x != buildings.end(); x++) if (x->getHPCurrent() <= 0) buildingsToRemove.push_back(x);
+	for (auto x : buildingsToRemove) buildings.erase(x);
+	buildingsToRemove.clear();
+}
+
 Game::Game(int x, int y) : xSize(x), ySize(y), window(sf::VideoMode(xSize, ySize),
-	"Endless Space", sf::Style::Fullscreen), rs(10), finish(false), scoreCounter(0), scoreLabel("Score: 0", rs.getFont()),
+	"Endless Space", sf::Style::Fullscreen), rs(), finish(false), scoreCounter(0), scoreLabel("Score: 0", rs.getFont()),
 	failWinLabel("", rs.getFont()), infoLabelNormal("", rs.getFont()), endingScoreLabel("", rs.getFont())
 {
 	//Player
@@ -280,6 +322,7 @@ void Game::Start(unsigned int eir, unsigned int eic)
 {
 	//Create Enemies
 	createEnemies(eir, eic);
+	createBuildings();
 
 	//start movement of enemies --TODO
 	isMovingRight = true;
@@ -296,6 +339,7 @@ void Game::Start(unsigned int eir, unsigned int eic)
 		deletePlayerBullets();
 		deleteEnemiesBullets();
 		hitsDetectionPlayer();
+		hitsDetectionBuildings();
 		VictoryCheck();
 		FailCheck();
 		drawGame();

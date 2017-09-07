@@ -1,7 +1,7 @@
 #include "ResourceManager.hpp"
 #include "cstring"
 
-ResourceManager::ResourceManager(int i) : MAXAMOUNTOFTEXTURES(i)
+ResourceManager::ResourceManager()
 {
 	texturesTab = new sf::Texture[MAXAMOUNTOFTEXTURES];
 	texturesTab[0].loadFromFile("src/player.png");
@@ -10,6 +10,12 @@ ResourceManager::ResourceManager(int i) : MAXAMOUNTOFTEXTURES(i)
 	texturesTab[3].loadFromFile("src/enemy2.png");
 	texturesTab[4].loadFromFile("src/enemy3.png");
 	texturesTab[5].loadFromFile("src/hp.png");
+	texturesTab[6].loadFromFile("src/Buildings0.png");
+	texturesTab[7].loadFromFile("src/Buildings1.png");
+	texturesTab[8].loadFromFile("src/Buildings2.png");
+	texturesTab[9].loadFromFile("src/Buildings3.png");
+	texturesTab[10].loadFromFile("src/Buildings4.png");
+
 	font.loadFromFile("src/font.ttf");
 }
 

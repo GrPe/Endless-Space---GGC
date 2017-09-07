@@ -119,6 +119,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Building.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Emeny.cpp" />
     <ClCompile Include="Events.cpp" />
@@ -129,6 +130,7 @@
     <ClCompile Include="SpaceShip.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Building.hpp" />
     <ClInclude Include="Bullet.hpp" />
     <ClInclude Include="Emeny.hpp" />
     <ClInclude Include="Events.hpp" />

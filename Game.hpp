@@ -5,6 +5,7 @@
 #include "Emeny.hpp"
 #include "ResourceManager.hpp"
 #include "Bullet.hpp"
+#include "Building.hpp"
 #include <vector>
 #include <list>
 #include <string>
@@ -63,11 +64,13 @@ private:
 	std::vector<Bullet> bulletsVector;
 	std::list<Bullet> bulletsEnemyVector;
 
+	//Buildings
+	std::list<Building> buildings; 
+	std::list<std::list<Building>::iterator> buildingsToRemove;
+
 	//Functions
 	//Display:
 	void drawGame();
-	//void drawWin(); //To huge
-	//void drawFailure(); //To huge
 	void drawEnd(bool result);
 	//Enemies
 	void createEnemies(unsigned int eir, unsigned int eic);
@@ -90,6 +93,10 @@ private:
 	inline void addPoints(unsigned int x);
 	//Randomize
 	inline int getIntFromRange(int from, int to);
+	//Buildings
+	void hitsDetectionBuildings();
+	void createBuildings();
+	void destroyBuildings();
 
 public:
 	Game(int x, int y);
