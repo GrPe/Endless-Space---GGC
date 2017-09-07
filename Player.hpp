@@ -12,6 +12,7 @@ public:
 	void getDamage();
 	void getHeal();
 	void getHeal(unsigned int x);
+	void kill() { hpCurrent = 0; };
 
 	//Movement
 	void moveLeft();

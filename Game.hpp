@@ -21,9 +21,14 @@ private:
 	sf::Text scoreLabel;
 	sf::Text failWinLabel;
 	sf::Text infoLabelNormal;
+	sf::Text endingScoreLabel;
 	const unsigned int NORMALTEXTSIZE = 30;
 	const unsigned int BIGTEXTSIZE = 80;
 	std::vector<sf::Sprite> HPSprites;
+	const std::string failString = "GAME OVER!";
+	const std::string winString = "YOU WIN!";
+	const std::string defaultEndMessageString = "Press ESC to exit";
+	const std::string scoreMessageString = "Your Score: ";
 
 	//map
 	const unsigned int xSize;
@@ -61,14 +66,16 @@ private:
 	//Functions
 	//Display:
 	void drawGame();
-	void drawWin(); //To huge
-	void drawFailure(); //To huge
+	//void drawWin(); //To huge
+	//void drawFailure(); //To huge
+	void drawEnd(bool result);
 	//Enemies
 	void createEnemies(unsigned int eir, unsigned int eic);
 	void checkEnemyCollision();
 	void moveEnemies();
 	void enemyShoot();
 	void hitsDetectionEnemies();///
+	void crossDownLineCheck();
 	//Bullets
 	void deleteEnemiesBullets();///
 	void deletePlayerBullets(); ///

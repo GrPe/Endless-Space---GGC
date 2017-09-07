@@ -138,7 +138,7 @@ void Game::VictoryCheck()
 	if (alienArmyVector.size() <= 0)
 	{
 		finishGame();
-		drawFailure();
+		drawEnd(true);
 	}
 }
 
@@ -147,7 +147,7 @@ void Game::FailCheck()
 	if (player.getHPCurrent() <= 0)
 	{
 		finishGame();
-		drawFailure();
+		drawEnd(false);
 	}
 }
 
@@ -163,45 +163,21 @@ inline void Game::addPoints(unsigned int x)
 	scoreLabel.setString("Score:" + std::to_string(scoreCounter));
 }
 
-void Game::drawWin()
+void Game::drawEnd(bool result)
 {
-	sf::Font font;
-	font.loadFromFile("src/font.ttf");
-	sf::Text text("YOU WIN!",font);
-	sf::Text text2("Press ESC to exit",font);
-	text.setCharacterSize(80);
-	text2.setCharacterSize(30);
-	text.setFillColor(sf::Color::White);
-	text2.setFillColor(sf::Color::White);
-	text.setPosition(xSize*0.5f-140, ySize*0.5f-120);
-	text2.setPosition(xSize*0.5f-120, ySize*0.5f +80);
+	if (result) failWinLabel.setString(winString);
+	else failWinLabel.setString(failString);
+	infoLabelNormal.setString(defaultEndMessageString);
+	endingScoreLabel.setString(scoreMessageString + std::to_string(scoreCounter));
+	failWinLabel.setOrigin(failWinLabel.getLocalBounds().width*0.5f, failWinLabel.getLocalBounds().height*0.5f);
+	infoLabelNormal.setOrigin(infoLabelNormal.getLocalBounds().width*0.5f, infoLabelNormal.getLocalBounds().height*0.5f);
+	endingScoreLabel.setOrigin(endingScoreLabel.getLocalBounds().width*0.5f, endingScoreLabel.getLocalBounds().height*0.5f);
 	while (window.isOpen())
 	{
 		window.clear();
-		window.draw(text);
-		window.draw(text2);
-		window.display();
-		events.WinEvent(window);
-	}
-}
-
-void Game::drawFailure()
-{
-	sf::Font font;
-	font.loadFromFile("src/font.ttf");
-	sf::Text text("YOU LOST", font);
-	sf::Text text2("Press ESC to exit", font);
-	text.setCharacterSize(80);
-	text2.setCharacterSize(30);
-	text.setFillColor(sf::Color::White);
-	text2.setFillColor(sf::Color::White);
-	text.setPosition(xSize*0.5f - 140, ySize*0.5f - 120);
-	text2.setPosition(xSize*0.5f - 120, ySize*0.5f + 80);
-	while(window.isOpen())
-	{
-		window.clear();
-		window.draw(text);
-		window.draw(text2);
+		window.draw(failWinLabel);
+		window.draw(endingScoreLabel);
+		window.draw(infoLabelNormal);
 		window.display();
 		events.WinEvent(window);
 	}
@@ -243,6 +219,16 @@ void Game::hitsDetectionEnemies()
 	deadEnemies.clear();
 }
 
+void Game::crossDownLineCheck()
+{
+	if (ender.getSprite().getPosition().y >= player.getSprite().getPosition().y-50.0f)
+	{
+		finishGame();
+		player.kill();
+		FailCheck();
+	}
+}
+
 void Game::deleteEnemiesBullets()
 {
 	for (auto x = bulletsEnemyVector.begin(); x != bulletsEnemyVector.end(); x++)
@@ -260,7 +246,8 @@ int Game::getIntFromRange(int from, int to)
 }
 
 Game::Game(int x, int y) : xSize(x), ySize(y), window(sf::VideoMode(xSize, ySize),
-	"Endless Space"), rs(10), finish(false), scoreCounter(0), scoreLabel("Score: 0", rs.getFont())
+	"Endless Space", sf::Style::Fullscreen), rs(10), finish(false), scoreCounter(0), scoreLabel("Score: 0", rs.getFont()),
+	failWinLabel("", rs.getFont()), infoLabelNormal("", rs.getFont()), endingScoreLabel("", rs.getFont())
 {
 	//Player
 	player.deadEnd(3, 900.f, rs.getTexture(0));
@@ -270,6 +257,15 @@ Game::Game(int x, int y) : xSize(x), ySize(y), window(sf::VideoMode(xSize, ySize
 	//Labels
 	scoreLabel.setPosition(xSize - 220.0f,10.0f);
 	scoreLabel.setCharacterSize(NORMALTEXTSIZE);
+
+	failWinLabel.setCharacterSize(BIGTEXTSIZE);
+	failWinLabel.setPosition(xSize*0.5f, ySize*0.5f);
+
+	infoLabelNormal.setCharacterSize(NORMALTEXTSIZE);
+	infoLabelNormal.setPosition(xSize*0.5f, ySize*0.5f + 80.0f);
+
+	endingScoreLabel.setCharacterSize(NORMALTEXTSIZE);
+	endingScoreLabel.setPosition(xSize*0.5f, ySize*0.5f + 120.0f);
 	//HP
 	for (int i = 0; i < player.getHPMax(); i++) HPSprites.push_back(sf::Sprite(rs.getTexture(5)));
 	int counter = 0;
