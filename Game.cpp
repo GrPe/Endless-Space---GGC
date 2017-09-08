@@ -292,7 +292,7 @@ Game::Game(int x, int y) : xSize(x), ySize(y), window(sf::VideoMode(xSize, ySize
 	failWinLabel("", rs.getFont()), infoLabelNormal("", rs.getFont()), endingScoreLabel("", rs.getFont())
 {
 	//Player
-	player.deadEnd(3, 900.f, rs.getTexture(0), rs.getSB());
+	player.deadEnd(3, 1100.f, rs.getTexture(0), rs.getSB());
 	player.getSprite().setPosition(sf::Vector2f(xSize*0.5f, ySize*0.9f));
 	//Window
 	window.setFramerateLimit(120);
@@ -316,6 +316,12 @@ Game::Game(int x, int y) : xSize(x), ySize(y), window(sf::VideoMode(xSize, ySize
 		x.setOrigin(x.getTexture()->getSize().x*0.5f, x.getTexture()->getSize().y*0.5f);
 		x.setPosition(20.0f+ 30.0f*counter++, 32.0f);
 	}
+
+	//Music
+	music.openFromFile("src/music.ogg");
+	music.setLoop(true);
+	music.setPlayingOffset(sf::seconds(5));
+	music.setVolume(60);
 }
 
 void Game::Start(unsigned int eir, unsigned int eic)
@@ -326,6 +332,9 @@ void Game::Start(unsigned int eir, unsigned int eic)
 
 	//start movement of enemies --TODO
 	isMovingRight = true;
+
+	//start music
+	music.play();
 	
 	//main loop of game
 	while (window.isOpen())

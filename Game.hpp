@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML\Graphics.hpp"
+#include "SFML\Audio.hpp"
 #include "Player.hpp"
 #include "Events.hpp"
 #include "Emeny.hpp"
@@ -14,6 +15,9 @@
 class Game
 {
 private:
+	//Audio
+	sf::Music music;
+
 	//Play control
 	bool finish;
 	unsigned int scoreCounter;

@@ -9,10 +9,9 @@ class ResourceManager
 {
 private:
 	sf::Texture* texturesTab; //Tab of textures using in game
-	sf::SoundBuffer soundShotPlayer; //Tab of sound buffer
+	sf::SoundBuffer soundShotPlayer;
 	sf::Font font; //Font using to display all texts in game
 	const unsigned int MAXAMOUNTOFTEXTURES = 11;
-	const unsigned int MAXAMOUNTOFSOUNDS = 2;
 
 public:
 	//Constructors

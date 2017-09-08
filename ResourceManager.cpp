@@ -16,7 +16,7 @@ ResourceManager::ResourceManager()
 	texturesTab[9].loadFromFile("src/Buildings3.png");
 	texturesTab[10].loadFromFile("src/Buildings4.png");
 
-	soundShotPlayer.loadFromFile("src/shot.wav");
+	soundShotPlayer.loadFromFile("src/shot.ogg");
 
 	font.loadFromFile("src/font.ttf");
 }
@@ -31,6 +31,7 @@ sf::SoundBuffer & ResourceManager::getSB()
 {
 	return soundShotPlayer;
 }
+
 
 ResourceManager::~ResourceManager()
 {
