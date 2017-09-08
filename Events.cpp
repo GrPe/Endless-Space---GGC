@@ -3,12 +3,18 @@
 #include <iostream>
 
 
+Events::Events()
+{
+	pMoveLeft = false;
+	pMoveRight = false;
+	pShot = false;
+}
+
 void Events::CatchEvent(sf::RenderWindow& window, Player& player, std::vector <Bullet>& vb, sf::Texture& tx)
 {
 	pMoveLeft = false;
 	pMoveRight = false;
 	pShot = false;
-
 	sf::Event e;
 	while (window.pollEvent(e))
 	{
@@ -31,11 +37,10 @@ void Events::CatchEvent(sf::RenderWindow& window, Player& player, std::vector <B
 				player.moveRight();
 				break;
 			case sf::Keyboard::Space:
-				player.shot(vb,tx);
+				player.shot(vb, tx);
 				break;
 			}
 		}
-		break;
 		}
 	}
 }

@@ -36,8 +36,11 @@ void Player::moveRight()
 
 void Player::shot(std::vector<Bullet>& listofBullets, sf::Texture& tx)
 {
-	Bullet tempbullet(sprite.getPosition().x, sprite.getPosition().y - sprite.getTexture()->getSize().y * 0.20f,tx,-1);
-	listofBullets.push_back(tempbullet);
+	if (listofBullets.size() < 1)
+	{
+		Bullet tempbullet(sprite.getPosition().x, sprite.getPosition().y - sprite.getTexture()->getSize().y * 0.20f, tx, -1);
+		listofBullets.push_back(tempbullet);
+	}
 }
 
 void Player::deadEnd(int _hp, float _speed)
