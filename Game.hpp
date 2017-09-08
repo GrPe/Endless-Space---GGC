@@ -77,11 +77,11 @@ private:
 	void checkEnemyCollision();
 	void moveEnemies();
 	void enemyShoot();
-	void hitsDetectionEnemies();///
+	void hitsDetectionEnemies();
 	void crossDownLineCheck();
 	//Bullets
-	void deleteEnemiesBullets();///
-	void deletePlayerBullets(); ///
+	void deleteEnemiesBullets();
+	void deletePlayerBullets();
 	void moveBullets();
 	//Player
 	void hitsDetectionPlayer();
@@ -90,7 +90,7 @@ private:
 	void VictoryCheck();
 	void FailCheck();
 	inline void addPoints();
-	inline void addPoints(unsigned int x);
+	inline void addPoints(unsigned int x); //For special enemy
 	//Randomize
 	inline int getIntFromRange(int from, int to);
 	//Buildings
@@ -101,8 +101,4 @@ private:
 public:
 	Game(int x, int y);
 	void Start(unsigned int eir, unsigned int eic);
-
-	std::vector<Bullet>& getVectorOfBullets() { return bulletsVector; }; ///useless
-	ResourceManager& getRS() {return rs;}; ///Useless
-	Player& getPlayer() { return player; }; ///Useless
 };

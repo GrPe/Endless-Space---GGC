@@ -2,19 +2,8 @@
 #include "SFML\Graphics.hpp"
 #include <iostream>
 
-
-Events::Events()
-{
-	pMoveLeft = false;
-	pMoveRight = false;
-	pShot = false;
-}
-
 void Events::CatchEvent(sf::RenderWindow& window, Player& player, std::vector <Bullet>& vb, sf::Texture& tx)
 {
-	pMoveLeft = false;
-	pMoveRight = false;
-	pShot = false;
 	sf::Event e;
 	while (window.pollEvent(e))
 	{
