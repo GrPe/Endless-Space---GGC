@@ -1,10 +1,14 @@
 #pragma once
 #include "SFML\Graphics.hpp"
+#include "SFML\Audio.hpp"
 #include "SpaceShip.hpp"
 #include "Bullet.hpp"
 
 class Player : public SpaceShip
 {
+private:
+	sf::Sound soundShot;
+
 public:
 	Player() {};
 	Player(int _hp, float _speed, sf::Texture& texture);
@@ -24,5 +28,5 @@ public:
 
 	//Reset stats of player
 	void deadEnd(int _hp, float _speed);
-	void deadEnd(int _hp, float _speed, sf::Texture& texture);
+	void deadEnd(int _hp, float _speed, sf::Texture& texture, sf::SoundBuffer& sb);
 };

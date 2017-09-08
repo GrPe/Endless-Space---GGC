@@ -40,6 +40,7 @@ void Player::shot(std::vector<Bullet>& listofBullets, sf::Texture& tx)
 	{
 		Bullet tempbullet(sprite.getPosition().x, sprite.getPosition().y - sprite.getTexture()->getSize().y * 0.20f, tx, -1);
 		listofBullets.push_back(tempbullet);
+		soundShot.play();
 	}
 }
 
@@ -50,7 +51,7 @@ void Player::deadEnd(int _hp, float _speed)
 	speed = _speed;
 }
 
-void Player::deadEnd(int _hp, float _speed, sf::Texture& texture)
+void Player::deadEnd(int _hp, float _speed, sf::Texture& texture, sf::SoundBuffer& sb)
 {
 	hpCurrent = _hp;
 	hpMax = _hp;
@@ -58,4 +59,6 @@ void Player::deadEnd(int _hp, float _speed, sf::Texture& texture)
 	sprite.setTexture(texture);
 	sprite.setOrigin(texture.getSize().x*0.5f, texture.getSize().y*0.5f);
 	sprite.setScale(0.4f, 0.4f);
+	soundShot.setBuffer(sb);
+	soundShot.setVolume(50.0f);
 }

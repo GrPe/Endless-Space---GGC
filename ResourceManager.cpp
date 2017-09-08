@@ -16,6 +16,8 @@ ResourceManager::ResourceManager()
 	texturesTab[9].loadFromFile("src/Buildings3.png");
 	texturesTab[10].loadFromFile("src/Buildings4.png");
 
+	soundShotPlayer.loadFromFile("src/shot.wav");
+
 	font.loadFromFile("src/font.ttf");
 }
 
@@ -23,6 +25,11 @@ sf::Texture& ResourceManager::getTexture(unsigned int x)
 {
 	if (x > MAXAMOUNTOFTEXTURES) return texturesTab[0];
 	return texturesTab[x];
+}
+
+sf::SoundBuffer & ResourceManager::getSB()
+{
+	return soundShotPlayer;
 }
 
 ResourceManager::~ResourceManager()

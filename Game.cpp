@@ -8,10 +8,10 @@ void Game::drawGame()
 	for (int x = 0; x < player.getHPCurrent(); x++) window.draw(HPSprites[x]);
 	//Enemy's Bullets
 	for (auto& x : bulletsEnemyVector) window.draw(x.getSprite());
-	//Enemies
-	for (auto& x : alienArmyVector) window.draw(x.getSprite());
 	//Buildings
 	for (auto& x : buildings) window.draw(x.getSprite());
+	//Enemies
+	for (auto& x : alienArmyVector) window.draw(x.getSprite());
 	//Bullets
 	for (auto& x : bulletsVector) window.draw(x.getSprite());
 	//Player
@@ -288,11 +288,11 @@ void Game::destroyBuildings()
 }
 
 Game::Game(int x, int y) : xSize(x), ySize(y), window(sf::VideoMode(xSize, ySize),
-	"Endless Space", sf::Style::Fullscreen), rs(), finish(false), scoreCounter(0), scoreLabel("Score: 0", rs.getFont()),
+	"Endless Space", sf::Style::Fullscreen),rs(), finish(false), scoreCounter(0), scoreLabel("Score: 0", rs.getFont()),
 	failWinLabel("", rs.getFont()), infoLabelNormal("", rs.getFont()), endingScoreLabel("", rs.getFont())
 {
 	//Player
-	player.deadEnd(3, 900.f, rs.getTexture(0));
+	player.deadEnd(3, 900.f, rs.getTexture(0), rs.getSB());
 	player.getSprite().setPosition(sf::Vector2f(xSize*0.5f, ySize*0.9f));
 	//Window
 	window.setFramerateLimit(120);
