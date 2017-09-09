@@ -25,7 +25,7 @@ void Game::createEnemies(unsigned int eir, unsigned int eic)
 	enemiesInRow = eir;
 	enemiesInColumn = eic;
 	amountOfEnemies = enemiesInRow * enemiesInColumn;
-	for (unsigned int i = 0; i < amountOfEnemies; i++) alienArmyVector.push_back(Enemy(1, 180.0f, rs.getTexture(getIntFromRange(2, 4))));
+	for (unsigned int i = 0; i < amountOfEnemies; i++) alienArmyVector.push_back(Enemy(1, 200.0f, rs.getTexture(getIntFromRange(2, 4))));
 	//there are temp variable to set enemies position
 	unsigned int r = 1;
 	unsigned int c = 1;
@@ -187,7 +187,7 @@ void Game::drawEnd(bool result)
 
 void Game::enemyShoot()
 {
-	if (getIntFromRange(1, 100) % 50 == 0) // Amount of enemy's bullets
+	if (getIntFromRange(1, 100) % 60 == 0) // Amount of enemy's bullets
 	{
 		int temp = getIntFromRange(0, alienArmyVector.size() - 1);
 		alienArmyVector[temp].shot(bulletsEnemyVector, rs.getTexture(1));
