@@ -4,6 +4,7 @@ I couldn't do it on time, but i finished her after deadline.
 It's a clone of Space Invaders.
 - **Warning! Game working only on the screen of the resolution 1920x1080p**
 - Graphics created by Kenney -> http://www.kenney.nl/
+- Music: SONNISS #GAMEAUDIOGDC
 ## Minimum requirements:
 - Processor: any
 - Graphics card: any
